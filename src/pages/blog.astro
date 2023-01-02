@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Post from '../components/Post.astro';
+
+const url = `${import.meta.env.PUBLIC_API_URL}/posts?populate=image`;
+const response = await fetch(url);
+const { data } = await response.json();
+---
+
+<Layout title="Blog" description="Description Blog">
+  <main class="container">
+    <h2 class="heading">Blog</h2>
+
+    <div class="grid">
+      {data?.map((post) => <Post post={post} />)}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .content {
+    display: grid;
+    gap: 4rem;
+  }
+  @media (min-width: 768px) {
+    .content {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+    }
+  }
+</style>

@@ -1,0 +1,156 @@
+---
+import { formatterDate } from '../helpers';
+
+export interface Props {
+  post: Post;
+}
+
+export interface Post {
+  id: number;
+  attributes: Attributes;
+}
+
+export interface Attributes {
+  title: string;
+  content: string;
+  url: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  image: Image;
+}
+
+export interface Image {
+  data: Data;
+}
+
+export interface Data {
+  id: number;
+  attributes: Attributes2;
+}
+
+export interface Attributes2 {
+  name: string;
+  alternativeText: any;
+  caption: any;
+  width: number;
+  height: number;
+  formats: Formats;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: any;
+  provider: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Formats {
+  small: Small;
+  medium: Medium;
+  thumbnail: Thumbnail;
+}
+
+export interface Small {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: any;
+  size: number;
+  width: number;
+  height: number;
+}
+
+export interface Medium {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: any;
+  size: number;
+  width: number;
+  height: number;
+}
+
+export interface Thumbnail {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: any;
+  size: number;
+  width: number;
+  height: number;
+}
+
+const { post } = Astro.props;
+const { title, content, image, publishedAt, url } = post.attributes;
+---
+
+<article>
+  <img
+    src={image.data.attributes.formats.medium.url}
+    alt={`Image blog ${title}`}
+  />
+  <div class="content">
+    <h3>{title}</h3>
+    <p class="date">{formatterDate(publishedAt)}</p>
+    <p class="resume">{content}</p>
+    <a href={`/blog/${url}`} class="link"> Read Post</a>
+  </div>
+</article>
+
+<style>
+  .post {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+  .content {
+    padding: 1.5rem;
+  }
+  .content h3 {
+    font-weight: 900;
+    font-size: 2.8rem;
+    margin: 0;
+  }
+  .date {
+    font-size: 1.6rem;
+    color: var(--primary);
+  }
+  .resume {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }
+  .text {
+    white-space: pre-wrap;
+  }
+
+  .mt-3 {
+    margin-top: 3rem;
+  }
+  .link {
+    margin-top: 2rem;
+    display: block;
+    background-color: var(--black);
+    color: var(--white);
+    text-decoration: none;
+    padding: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-weight: 700;
+    transition-property: background-color;
+    transition-duration: 300ms;
+  }
+  .link:hover {
+    background-color: var(--primary);
+  }
+</style>

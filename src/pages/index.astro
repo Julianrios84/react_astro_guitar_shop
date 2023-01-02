@@ -1,0 +1,88 @@
+---
+import Course from '../components/Course.astro';
+import Guitar from '../components/Guitar.astro';
+import Post from '../components/Post.astro';
+import Layout from '../layouts/Layout.astro';
+
+const urlGuitar = `${import.meta.env.PUBLIC_API_URL}/guitars?populate=picture`;
+const urlPost = `${import.meta.env.PUBLIC_API_URL}/posts?populate=image`;
+const urlCourse = `${import.meta.env.PUBLIC_API_URL}/course?populate=picture`;
+
+const [responseGuitar, responsePost, responseCourse] = await Promise.all([
+  fetch(urlGuitar),
+  fetch(urlPost),
+  fetch(urlCourse)
+]);
+
+const [{ data: guitars }, { data: posts }, { data: course }] =
+  await Promise.all([
+    responseGuitar.json(),
+    responsePost.json(),
+    responseCourse.json()
+  ]);
+---
+
+<Layout title="Home" description="Description home">
+  <main class="container">
+    <h2 class="heading">Our Collection</h2>
+
+    <div class="grid">
+      {guitars?.map((guitar) => <Guitar guitar={guitar} />)}
+    </div>
+  </main>
+
+  <Course course={course} />
+
+  <section class="container">
+    <h2 class="heading">Blog</h2>
+
+    <div class="grid">
+      {posts?.map((post) => <Post post={post} />)}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 60ch;
+  }
+  h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+  .instructions {
+    line-height: 1.6;
+    margin: 1rem 0;
+    border: 1px solid rgba(var(--accent), 25%);
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.4rem;
+  }
+  .instructions code {
+    font-size: 0.875em;
+    font-weight: bold;
+    background: rgba(var(--accent), 12%);
+    color: rgb(var(--accent));
+    border-radius: 4px;
+    padding: 0.3em 0.45em;
+  }
+  .instructions strong {
+    color: rgb(var(--accent));
+  }
+  .link-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    gap: 1rem;
+    padding: 0;
+  }
+</style>

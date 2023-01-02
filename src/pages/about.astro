@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import aboutImage from '../img/nosotros.jpg';
+---
+
+<Layout title="About" description="Description About">
+  <main class="container">
+    <h2 class="heading">About</h2>
+
+    <div class="content">
+      <img src={aboutImage} alt="Image about us" />
+
+      <div>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet ratione
+          incidunt exercitationem explicabo quisquam ea minus fuga, officiis
+          vero soluta eveniet laboriosam quibusdam commodi omnis reprehenderit
+          asperiores provident quia voluptate illum modi aliquid autem sit.
+          Quisquam, aliquam distinctio! Eum laborum officia, dolore veniam
+          repellendus pariatur nam porro accusantium? Obcaecati, perferendis.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta
+          ratione quis consectetur ipsum quae dicta vero non dolorum modi magni,
+          sint dolore harum natus tempora. Accusamus minus magni doloremque
+          alias.
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .content {
+    display: grid;
+    gap: 4rem;
+  }
+  @media (min-width: 768px) {
+    .content {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+    }
+  }
+</style>
